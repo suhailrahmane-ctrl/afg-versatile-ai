@@ -3,7 +3,7 @@ from gtts import gTTS
 from io import BytesIO
 
 st.set_page_config(page_title="AFG Versatile AI", layout="wide")
-st.markdown("<h1 style='text-align:center;background:linear-gradient(to right,black,red,green);color:white;padding:20px;border-radius:15px;font-weight:bold;'>افغانستان برای جهان ✪ AFG Versatile AI</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;background:linear-gradient(to right,black,red,green);color:white;padding:25px;border-radius:15px;font-weight:bold;'>افغانستان برای جهان ✪ AFG Versatile AI</h1>", unsafe_allow_html=True)
 
 tab1, tab2, tab3, tab4 = st.tabs(["چت‌بات", "تولید عکس", "تولید ویدیو", "تولید صدا"])
 
@@ -12,11 +12,11 @@ with tab1:
     msg = st.chat_input("اینجا بنویس...")
     if msg:
         st.chat_message("user").write(msg)
-        st.chat_message("assistant").write(f"سلام داداش! تو گفتی: '{msg}' — من Grok هستم و می‌گم افغانستان برای جهان! چی دیگه می‌خوای بدونی؟ 🇦🇫")
+        st.chat_message("assistant").write(f"سلام داداش! تو گفتی: '{msg}' — افغانستان برای جهان! چی دیگه می‌خوای بدونی؟ 🇦🇫")
 
 with tab2:
     st.header("تولید عکس")
-    st.info("به زودی واقعی با DALL-E یا Flux 🔥")
+    st.info("به زودی با FLUX.1 واقعی 🔥")
 
 with tab3:
     st.header("تولید ویدیو")
@@ -24,7 +24,7 @@ with tab3:
 
 with tab4:
     st.header("تولید صدا (کاملاً کار می‌کنه)")
-    text = st.text_area("متن خود را بنویس (دری یا پشتو)")
+    text = st.text_area("متن خود را بنویس")
     if st.button("صدا بساز") and text:
         with st.spinner("در حال ساخت صدا..."):
             tts = gTTS(text, lang='fa')
