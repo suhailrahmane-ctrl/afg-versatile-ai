@@ -2,52 +2,38 @@ import streamlit as st
 from groq import Groq
 from gtts import gTTS
 from io import BytesIO
-import time
 
 st.set_page_config(page_title="AFG Versatile AI", layout="wide")
+st.markdown("<h1 style='text-align:center;background:linear-gradient(to right,black,red,green);color:white;padding:20px;border-radius:15px;'>افغانستان برای جهان ✪ AFG Versatile AI</h1>", unsafe_allow_html=True)
 
-st.markdown("""
-<style>
-    .big-title {font-size: 50px; text-align: center; background: linear-gradient(to right, black, red, green);
-                color: white; padding: 25px; border-radius: 15px; font-weight: bold;}
-</style>
-<h1 class="big-title">افغانستان برای جهان ✪ AFG Versatile AI</h1>
-""", unsafe_allow_html=True)
+چت, عکس, ویدیو, صدا = st.tabs(["چت‌بات", "تولید عکس", "تولید ویدیو", "تولید صدا"])
 
-tab1, tab2, tab3, tab4 = st.tabs(["چت‌بات", "تولید عکس", "تولید ویدیو", "تولید صدا"])
-
-with tab1:
+with چت:
     st.header("چت‌بات قوی Llama 3")
-    api_key = st.text_input("Groq API Key", type="password", value=st.session_state.get("groq_key", ""))
-    
-    if api_key:
-        st.session_state.groq_key = api_key
+    کلید = st.text_input("کلید Groq", type="password")
+    if کلید:
         try:
-            client = Groq(api_key=api_key.strip())
-            prompt = st.chat_input("سوال خود را بنویس")
-            if prompt:
-                with st.chat_message("user"): st.write(prompt)
+            client = Groq(api_key=کلید)
+            سوال = st.chat_input("سوال خود را بنویس")
+            if سوال:
+                st.chat_message("user").write(سوال)
                 with st.chat_message("assistant"):
                     with st.spinner("در حال فکر کردن..."):
-                        resp = client.chat.completions.create(
-                            messages=[{"role": "user", "content": prompt}],
-                            model="llama3-70b-8192",
-                            timeout=60
-                        )
-                        st.write(resp.choices[0].message.content)
-        except Exception as e:
-            st.error("کلید اشتباه یا اینترنت قطع است. دوباره امتحان کن.")
+                        جواب = client.chat.completions.create(model="llama3-70b-8192", messages=[{"role":"user","content":سوال}])
+                        st.write(جواب.choices[0].message.content)
+        except:
+            st.error("کلید اشتباه یا اینترنت قطع — دوباره امتحان کن")
 
-with tab2: st.header("تولید عکس"); st.info("به زودی 🔥")
-with tab3: st.header("تولید ویدیو"); st.info("به زودی 🔥")
+with عکس: st.header("تولید عکس"); st.info("به زودی 🔥")
+with ویدیو: st.header("تولید ویدیو"); st.info("به زودی 🔥")
 
-with tab4:
+with صدا:
     st.header("تولید صدا")
-    text = st.text_area("متن را بنویس")
-    if st.button("صدا بساز") and text:
-        tts = gTTS(text, lang='fa')
-        audio = BytesIO()
-        tts.write_to_fp(audio)
-        audio.seek(0)
-        st.audio(audio, format="audio/mp3")
-        st.download_button("دانلود صدا", audio, "afg_voice.mp3")
+    متن = st.text_area("متن خود را بنویس")
+    if st.button("صدا بساز") and متن:
+        صدا = gTTS(متن, lang='fa')
+        بافر = BytesIO()
+        صدا.write_to_fp(بافر)
+        بافر.seek(0)
+        st.audio(بافر, format="audio/mp3")
+        st.download_button("دانلود صدا", بافر, "afg_voice.mp3")
